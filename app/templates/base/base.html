@@ -154,7 +154,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                 {% block  top_bar%}
+                 {% block  top_bar %}
                  <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
                      
                      <!-- Sidebar Toggle (Topbar) -->
@@ -357,7 +357,7 @@
 
                 </nav>
                 <!-- End of Topbar -->
-                {% endblock  top_bar%}
+                {% endblock top_bar %}
 
                 {% block page_content %}
                 <!-- Begin Page Content -->
@@ -369,11 +369,11 @@
                 </div>
                 <!-- /.container-fluid -->
                 {% endblock page_content %}
-                {% block footer %}
-
+                
             </div>
             <!-- End of Main Content -->
             
+            {% block footer %}
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -391,6 +391,8 @@
     <!-- End of Page Wrapper -->
     {% endblock footer %}
 
+    {% block login %}
+    {% endblock login %}
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
@@ -425,7 +427,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'base/js/sb-admin-2.min.js' %}"></script>
-
+    {% block js_page %}{% endblock js_page %}
 </body>
 
 </html>
