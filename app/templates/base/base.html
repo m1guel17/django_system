@@ -411,7 +411,11 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{% url 'bases:logout' %}">Salir</a>
+                    {% comment %} <a class="btn btn-primary" href="{% url 'bases:logout' %}">Salir</a> {% endcomment %}
+                    <form action="{% url 'bases:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </form>
                 </div>
             </div>
         </div>
