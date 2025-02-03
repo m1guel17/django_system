@@ -67,8 +67,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Catálogos de Inventario:</h6>
                         <a class="collapse-item" href="{% url 'inv:categoria_lista' %}">Categorías</a>
+                        <a class="collapse-item" href="{% url 'inv:subcategoria_lista' %}">Sub Categorías</a>
                         {% comment %} <a class="collapse-item" href="inv/categorias/">Categorías</a> {% endcomment %}
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        {% comment %} <a class="collapse-item" href="cards.html">Cards</a> {% endcomment %}
                     </div>
                 </div>
             </li>

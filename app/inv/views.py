@@ -4,8 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
 
-from inv.models import Categoria
-from inv.forms import CategoriaForm
+from inv.models import Categoria, SubCategoria
+from inv.forms import CategoriaForm, SubCategoriaForm
 
 class CategoriaView(LoginRequiredMixin, generic.ListView):
     model = Categoria
@@ -43,4 +43,41 @@ class CategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     context_object_name = "obj"
     success_url	= reverse_lazy("inv:categoria_lista")
     success_message="Categoría Eliminada Satisfactoriamente"
+
+class SubCategoriaView(LoginRequiredMixin, generic.ListView):
+    model = SubCategoria
+    template_name = "inv/subcategoria_lista.html"
+    context_object_name = "obj"
+    login_url = 'bases:login'
+
+class SubCategoriaNew(LoginRequiredMixin, generic.CreateView):
+    model = SubCategoria
+    template_name = "inv/subcategoria_form.html"
+    context_object_name = "obj"
+    form_class = SubCategoriaForm
+    success_url	= reverse_lazy("inv:subcategoria_lista")
+    login_url="base:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+class SubCategoriaEdit(LoginRequiredMixin, generic.UpdateView):
+    model = SubCategoria
+    template_name = "inv/subcategoria_form.html"
+    context_object_name = "obj"
+    form_class = SubCategoriaForm
+    success_url	= reverse_lazy("inv:subcategoria_lista")
+    login_url="base:login"
     
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+class SubCategoriaDelete(LoginRequiredMixin, generic.DeleteView):
+    model = SubCategoria
+    template_name = "inv/categoria_delete.html"
+    context_object_name = "obj"
+    success_url	= reverse_lazy("inv:subcategoria_lista")
+    success_message="Categoría Eliminada Satisfactoriamente"
+
