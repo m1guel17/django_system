@@ -46,8 +46,34 @@ Deployment
     ```bash
     pip install -r requirements.txt
     ```
-5. **Run the application:**
+4. **Configure Database**
+    ```
+    Update database settings in settings.py if needed (defaults to PostgreSQL).
+    ```
+5. **Run Migrations**
+    ```bash
+    python manage.py migrate
+    ```
+6. **Create Admin User**
+    ```bash
+    python manage.py createsuperuser
+    ```
+7. **Run the application:**
    ```bash
    cd app/
    python3.12 manage.py runserver
    ```
+
+# Technology Stack 💻
+* Backend: Django 5.1.4
+* Database: PostgreSQL
+* PDF Generation: ReportLab (_in development_)
+* Frontend: HTML, Bootstrap, JS
+* Authentication: Django Admin
+
+# Contributing 🤝
+* Fork the repository
+* Create a feature branch (git checkout -b feature/improvement)
+* Commit changes (git commit -m 'Add new feature')
+* Push to branch (git push origin feature/improvement)
+* Open a Pull Request
