@@ -4,8 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
 
-from inv.models import Categoria, SubCategoria
-from inv.forms import CategoriaForm, SubCategoriaForm
+from inv.models import Categoria, SubCategoria, Marca
+from inv.forms import CategoriaForm, SubCategoriaForm, MarcaForm
 
 class CategoriaView(LoginRequiredMixin, generic.ListView):
     model = Categoria
@@ -80,4 +80,34 @@ class SubCategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     context_object_name = "obj"
     success_url	= reverse_lazy("inv:subcategoria_lista")
     success_message="Categoría Eliminada Satisfactoriamente"
+
+class MarcaView(LoginRequiredMixin, generic.ListView):
+    model = Marca
+    template_name = "inv/marca_lista.html"
+    context_object_name = "obj"
+    login_url = "bases:login"
+    
+class MarcaNew(LoginRequiredMixin, generic.CreateView):
+    model = Marca
+    template_name = "inv/marca_form.html"
+    context_object_name = "obj"
+    form_class = MarcaForm
+    success_url	= reverse_lazy("inv:marca_lista")
+    login_url="base:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        return super().form_valid(form)
+
+class MarcaEdit(LoginRequiredMixin, generic.UpdateView):
+    model = Marca
+    template_name = "inv/marca_form.html"
+    context_object_name = "obj"
+    form_class = MarcaForm
+    success_url	= reverse_lazy("inv:marca_lista")
+    login_url="base:login"
+    
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
 

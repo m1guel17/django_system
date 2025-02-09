@@ -68,7 +68,7 @@
                         <h6 class="collapse-header">Catálogos de Inventario:</h6>
                         <a class="collapse-item" href="{% url 'inv:categoria_lista' %}">Categorías</a>
                         <a class="collapse-item" href="{% url 'inv:subcategoria_lista' %}">Sub Categorías</a>
-                        {% comment %} <a class="collapse-item" href="inv/categorias/">Categorías</a> {% endcomment %}
+                        <a class="collapse-item" href="{% url 'inv:marca_lista' %}">Marcas</a>
                         {% comment %} <a class="collapse-item" href="cards.html">Cards</a> {% endcomment %}
                     </div>
                 </div>
@@ -83,10 +83,10 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="#">Colors</a>
+                        <a class="collapse-item" href="#">Borders</a>
+                        <a class="collapse-item" href="#">Animations</a>
+                        <a class="collapse-item" href="#">Other</a>
                     </div>
                 </div>
             </li>
