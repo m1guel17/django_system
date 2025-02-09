@@ -4,8 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
 
-from inv.models import Categoria, SubCategoria, Marca
-from inv.forms import CategoriaForm, SubCategoriaForm, MarcaForm
+from inv.models import Categoria, SubCategoria, Marca, UnidadMedida
+from inv.forms import CategoriaForm, SubCategoriaForm, MarcaForm, UMForm
 
 class CategoriaView(LoginRequiredMixin, generic.ListView):
     model = Categoria
@@ -19,7 +19,7 @@ class CategoriaNew(LoginRequiredMixin, generic.CreateView):
     context_object_name = "obj"
     form_class = CategoriaForm
     success_url	= reverse_lazy("inv:categoria_lista")
-    login_url="base:login"
+    login_url="bases:login"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -31,7 +31,7 @@ class CategoriaEdit(LoginRequiredMixin, generic.UpdateView):
     context_object_name = "obj"
     form_class = CategoriaForm
     success_url	= reverse_lazy("inv:categoria_lista")
-    login_url="base:login"
+    login_url = "bases:login"
     
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -42,7 +42,7 @@ class CategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = "inv/categoria_delete.html"
     context_object_name = "obj"
     success_url	= reverse_lazy("inv:categoria_lista")
-    success_message="Categoría Eliminada Satisfactoriamente"
+    success_message = "Categoría Eliminada Satisfactoriamente"
 
 class SubCategoriaView(LoginRequiredMixin, generic.ListView):
     model = SubCategoria
@@ -56,7 +56,7 @@ class SubCategoriaNew(LoginRequiredMixin, generic.CreateView):
     context_object_name = "obj"
     form_class = SubCategoriaForm
     success_url	= reverse_lazy("inv:subcategoria_lista")
-    login_url="base:login"
+    login_url = "bases:login"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -68,7 +68,7 @@ class SubCategoriaEdit(LoginRequiredMixin, generic.UpdateView):
     context_object_name = "obj"
     form_class = SubCategoriaForm
     success_url	= reverse_lazy("inv:subcategoria_lista")
-    login_url="base:login"
+    login_url = "bases:login"
     
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -79,7 +79,7 @@ class SubCategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     template_name = "inv/categoria_delete.html"
     context_object_name = "obj"
     success_url	= reverse_lazy("inv:subcategoria_lista")
-    success_message="Categoría Eliminada Satisfactoriamente"
+    success_message = "Categoría Eliminada Satisfactoriamente"
 
 class MarcaView(LoginRequiredMixin, generic.ListView):
     model = Marca
@@ -93,7 +93,7 @@ class MarcaNew(LoginRequiredMixin, generic.CreateView):
     context_object_name = "obj"
     form_class = MarcaForm
     success_url	= reverse_lazy("inv:marca_lista")
-    login_url="base:login"
+    login_url = "bases:login"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
@@ -105,7 +105,7 @@ class MarcaEdit(LoginRequiredMixin, generic.UpdateView):
     context_object_name = "obj"
     form_class = MarcaForm
     success_url	= reverse_lazy("inv:marca_lista")
-    login_url="base:login"
+    login_url = "bases:login"
     
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -129,3 +129,51 @@ def marca_inactivar(request, id):
         
     return render(request, template_name, contexto)    
 
+class UMView(LoginRequiredMixin, generic.ListView):
+    model = UnidadMedida
+    template_name = "inv/um_lista.html"
+    context_object_name = "obj"
+    login_url = "bases:login"
+    
+class UMNew(LoginRequiredMixin, generic.CreateView):
+    model = UnidadMedida
+    template_name="inv/um_form.html"
+    context_object_name = 'obj'
+    form_class=UMForm
+    success_url= reverse_lazy("inv:um_lista")
+    login_url="bases:login"
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        print(self.request.user.id)
+        return super().form_valid(form)
+
+class UMEdit(LoginRequiredMixin, generic.UpdateView):
+    model = UnidadMedida
+    template_name = "inv/um_form.html"
+    context_object_name = "obj"
+    form_class = UMForm
+    success_url	= reverse_lazy("inv:um_lista")
+    login_url="bases:login"
+    
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        return super().form_valid(form)
+
+def um_inactivar(request, id):
+    um = UnidadMedida.objects.filter(pk=id).first()
+    contexto = {}
+    template_name = "inv/categoria_delete.html"
+    
+    if not um:
+        return redirect("inv:um_lista")
+    
+    if request.method == "GET":
+        contexto = {"obj": um}
+    
+    if request.method == "POST":
+        um.estado = False
+        um.save()
+        return redirect("inv:um_lista")
+        
+    return render(request, template_name, contexto)   
