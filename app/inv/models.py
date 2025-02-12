@@ -69,7 +69,8 @@ class Producto(ClaseModelo):
         unique=True
     )
     codigo_barra = models.CharField(max_length=50)
-    descripcion = models.CharField(max_length=200, help_text='Descripción del Producto')
+    descripcion = models.CharField(max_length=200)
+    # descripcion = models.CharField(max_length=200, help_text='Descripción del Producto') when you use the {{ form.as_p }} and if you add the help_text, this help text will be displayed in the form
     precio = models.FloatField(default=0)
     existencia = models.IntegerField(default=0)
     ultima_compra = models.DateField(null = True, blank = True)

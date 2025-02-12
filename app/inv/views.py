@@ -197,6 +197,12 @@ class ProductoNew(LoginRequiredMixin, generic.CreateView):
         # print(self.request.user.id)
         return super().form_valid(form)
     
+    def get_context_data(self, **kwargs):
+        context = super(ProductoNew, self).get_context_data(**kwargs)
+        context["categorias"] = Categoria.objects.all()
+        context["subcategorias"] = SubCategoria.objects.all()
+        return context
+
 class ProductoEdit(LoginRequiredMixin, generic.UpdateView):
     model = Producto
     template_name = "inv/producto_form.html"
