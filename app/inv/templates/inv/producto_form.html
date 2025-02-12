@@ -1,4 +1,4 @@
-<div class="modal-dialog  modal-lg">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
 
         {% if obj %}
@@ -15,16 +15,16 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% if obj %}Editar {% else %}Nuevo {% endif %}Producto 1</div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{% if obj %}Editar {% else %}Nuevo {% endif %}Producto</div>
                                 <div class="dropdown-divider"></div>
                                 {% csrf_token %}
                                 <div class="row">
-                                    {% comment %}
                                     {{ form.as_p }}
+                                    {% comment %}
                                     This could work as a alpha version by it self
                                     {% endcomment %}
                                 </div>
-                                {% comment %} New block {% endcomment %} 
+                                {% comment %} New block
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="col-md-6">{{form.codigo.label}}</div>
@@ -44,8 +44,8 @@
                                     
                                     <div class="col-md-6">
                                         <div class="col-md-6">{{form.estado.label}}</div>
-                                        <div class="col-md-6 mb-3 input-group">{{form.estado}}</div>
-                                        {% comment %} You can add input-group to the class so you can have a better button design {% endcomment %}
+                                        <div class="col-md-6 mb-3 input-group">{{form.estado}}</div> {% endcomment %} 
+                                        {% comment %} You can add input-group to the class so you can have a better button design {% endcomment %}   {% comment %}
                                     </div>                            
                                 </div>
                                 
@@ -122,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% comment %} End of New block {% endcomment %}
+                                End of New block {% endcomment %}
                                 
                                 
                                 
