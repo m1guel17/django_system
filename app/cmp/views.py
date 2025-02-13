@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
+from django.http import HttpResponse
+import json
 
 from cmp.models import Proveedor
 from cmp.forms import ProveedorForm
@@ -46,6 +48,9 @@ def producto_inactivar(request, id):
     template_name = "cmp/inactivar_prv.html"
     
     if not proveedor:
+        return HttpResponse('Proveedor no existe ' + str(id))
+    
+    if not proveedor:
         return redirect("cmp:proveedor_lista")
     
     if request.method == "GET":
@@ -54,6 +59,7 @@ def producto_inactivar(request, id):
     if request.method == "POST":
         proveedor.estado = False
         proveedor.save()
-        return redirect("cmp:proveedor_lista")
+        contexto={'obj':'OK'}
+        return HttpResponse('Proveedor Inactivado')
         
     return render(request, template_name, contexto)   

@@ -23,3 +23,52 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        
+        var token = $('input[name=csrfmiddlewaretoken]').val();
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", token);
+                }
+            }
+        });
+
+
+        $("#btnInactivar").click(function(e){
+            e.preventDefault();
+            // alert("Probando");  // This is an popup alert inside browser
+            
+            var id = {{ obj.id }};
+            var template = "{% url 'cmp:proveedor_inactivar' obj.id %}";
+            var data = {"id": id};
+
+            data = JSON.stringify(data);
+
+            $.ajax({
+                type: "post",
+                url: template,
+                data: data,
+                beforeSend: function(xhr,settings){
+                    $.ajaxSettings.beforeSend(xhr,settings);
+                },
+                success: function(response){
+                    console.log(response);
+                    cerrar_modal();
+                    alert(response);
+                    location.reload(); // this is to reload the page after the success
+                },
+                error: function(jqXHR, textStatus, errorThrow){
+                    console.log(textStatus, errorThrow);
+                    cerrar_modal();
+                }
+            });
+
+        });
+    });
+
+
+
+</script>
