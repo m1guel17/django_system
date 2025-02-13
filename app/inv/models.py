@@ -31,9 +31,9 @@ class SubCategoria(ClaseModelo):
         
 class Marca(ClaseModelo):
     descripcion = models.CharField(
-        max_length=100,
-        help_text='Descripción de la Marca',
-        unique=True
+        max_length = 100,
+        help_text = 'Descripción de la Marca',
+        unique = True
     )
 
     def __str__(self):
@@ -48,9 +48,9 @@ class Marca(ClaseModelo):
 
 class UnidadMedida(ClaseModelo):
     descripcion = models.CharField(
-        max_length=100,
-        help_text='Descripción de la Unidad Medida',
-        unique=True
+        max_length = 100,
+        help_text = 'Descripción de la Unidad Medida',
+        unique = True
     )
 
     def __str__(self):
@@ -65,8 +65,8 @@ class UnidadMedida(ClaseModelo):
 
 class Producto(ClaseModelo):
     codigo = models.CharField(
-        max_length=20,
-        unique=True
+        max_length = 20,
+        unique = True
     )
     codigo_barra = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=200)
