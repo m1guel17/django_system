@@ -467,6 +467,15 @@
         }
 
         function mensaje(msg, color="green"){
+            if (color == "success"){
+                color = "green";
+            }
+            if (color == "error"){
+                color = "red";
+            }
+
+
+
             $.alert({
                 title:"",
                 theme:"material",
@@ -474,6 +483,13 @@
                 content:msg
             });
         }
+
+        {% if messages %}
+            {% for message in messages %}
+                // console.log("{{ message.tags }}"); // para identificar el mensaje de que tipo es
+                mensaje("{{ message }}", "{{ message.tags }}");
+            {% endfor %}
+        {% endif %}
 
     </script>
     {% endblock control_modal %}

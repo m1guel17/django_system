@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.urls import reverse_lazy
@@ -125,6 +125,7 @@ def marca_inactivar(request, id):
     if request.method == "POST":
         marca.estado = False
         marca.save()
+        messages.success(request, 'Marca {} Inactivada'.format(marca.descripcion)) # esto ayuda en la plantilla base.html en mensaje("{{ message }}", "{{ message.tags }}"); para mandar un model jquery en la pantalla
         return redirect("inv:marca_lista")
         
     return render(request, template_name, contexto)    

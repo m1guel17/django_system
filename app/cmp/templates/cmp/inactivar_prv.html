@@ -43,6 +43,7 @@
             
             var id = {{ obj.id }};
             var template = "{% url 'cmp:proveedor_inactivar' obj.id %}";
+            // template += id;
             var data = {"id": id};
 
             data = JSON.stringify(data);
@@ -55,13 +56,16 @@
                     $.ajaxSettings.beforeSend(xhr,settings);
                 },
                 success: function(response){
-                    console.log(response);
+                    console.log(response); // this gets the message from views.py HTTPResponse
                     cerrar_modal();
-                    alert(response);
-                    location.reload(); // this is to reload the page after the success
+                    //alert(response);
+                    var tipo=(response.startsWith("Proveedor no existe") ? "red" : "green");
+                    mensaje(response, tipo)
+                    //location.reload(); // this is to reload the page after the success
                 },
                 error: function(jqXHR, textStatus, errorThrow){
-                    console.log(textStatus, errorThrow);
+                    // console.log(textStatus, errorThrow);
+                    mensaje(errorThrow, "red")
                     cerrar_modal();
                 }
             });
