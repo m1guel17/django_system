@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+
 from django.views import generic
 from django.urls import reverse_lazy
 
@@ -13,25 +15,27 @@ class CategoriaView(LoginRequiredMixin, generic.ListView):
     context_object_name = "obj"
     login_url = 'bases:login'
 
-class CategoriaNew(LoginRequiredMixin, generic.CreateView):
+class CategoriaNew(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
     model = Categoria
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class = CategoriaForm
     success_url	= reverse_lazy("inv:categoria_lista")
     login_url="bases:login"
+    success_message = "Categoría Creada Satisfactoriamente"
 
     def form_valid(self, form):
         form.instance.uc = self.request.user
         return super().form_valid(form)
 
-class CategoriaEdit(LoginRequiredMixin, generic.UpdateView):
+class CategoriaEdit(SuccessMessageMixin, LoginRequiredMixin, generic.UpdateView):
     model = Categoria
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class = CategoriaForm
     success_url	= reverse_lazy("inv:categoria_lista")
     login_url = "bases:login"
+    success_message = "Categoría Actualizada Satisfactoriamente"
     
     def form_valid(self, form):
         form.instance.um = self.request.user.id
@@ -126,6 +130,7 @@ def marca_inactivar(request, id):
         marca.estado = False
         marca.save()
         messages.success(request, 'Marca {} Inactivada'.format(marca.descripcion)) # esto ayuda en la plantilla base.html en mensaje("{{ message }}", "{{ message.tags }}"); para mandar un model jquery en la pantalla
+        # messages.success(request, 'Marca {} Inactivada'.format(marca.descripcion), "red") # puedes poner el color que quieres 
         return redirect("inv:marca_lista")
         
     return render(request, template_name, contexto)    
