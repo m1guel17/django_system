@@ -11,20 +11,20 @@ from inv.forms import CategoriaForm, SubCategoriaForm, MarcaForm, UMForm, Produc
 
 from bases.views import SinPrivilegios
 
-class CategoriaView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+class CategoriaView(SinPrivilegios, generic.ListView):
     permission_required = "inv.view_categoria"
     model = Categoria
     template_name = "inv/categoria_lista.html"
     context_object_name = "obj"
-    login_url = 'bases:login'
+    #login_url="bases:login"
 
-class CategoriaNew(SuccessMessageMixin, LoginRequiredMixin, generic.CreateView):
+class CategoriaNew(SuccessMessageMixin, SinPrivilegios, generic.CreateView):
     model = Categoria
     template_name = "inv/categoria_form.html"
     context_object_name = "obj"
     form_class = CategoriaForm
     success_url	= reverse_lazy("inv:categoria_lista")
-    login_url="bases:login"
+    #login_url="bases:login"
     success_message = "Categoría Creada Satisfactoriamente"
 
     def form_valid(self, form):
@@ -51,12 +51,12 @@ class CategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     success_url	= reverse_lazy("inv:categoria_lista")
     success_message = "Categoría Eliminada Satisfactoriamente"
 
-class SubCategoriaView(LoginRequiredMixin, SinPrivilegios, generic.ListView):
+class SubCategoriaView(SinPrivilegios, generic.ListView):
     permission_required = "inv.view_subcategoria"
     model = SubCategoria
     template_name = "inv/subcategoria_lista.html"
     context_object_name = "obj"
-    login_url = 'bases:login'
+    #login_url = 'bases:login'
     """
     def handle_no_permission(self): # this can be used to redirect to a 404/403 forbidden page 
         if self.request.user.is_authenticated:
@@ -97,12 +97,12 @@ class SubCategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     success_url	= reverse_lazy("inv:subcategoria_lista")
     success_message = "Categoría Eliminada Satisfactoriamente"
 
-class MarcaView(LoginRequiredMixin, SinPrivilegios, generic.ListView):
+class MarcaView(SinPrivilegios, generic.ListView):
     permission_required = "inv.view_marca"
     model = Marca
     template_name = "inv/marca_lista.html"
     context_object_name = "obj"
-    login_url = "bases:login"
+    #login_url = "bases:login"
     
 class MarcaNew(LoginRequiredMixin, generic.CreateView):
     model = Marca

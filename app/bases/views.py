@@ -11,12 +11,15 @@ class Home(LoginRequiredMixin, generic.TemplateView):
     template_name = "bases/home.html"
     login_url = 'bases:login'#'/admin'
 
-class HomeSinPrivilegios(generic.TemplateView):
+class HomeSinPrivilegios(LoginRequiredMixin, generic.TemplateView):
+    login_url = 'bases:login'#'/admin'
     template_name = "bases/sin_privilegios.html"
     
-class SinPrivilegios(PermissionRequiredMixin):
+class SinPrivilegios(LoginRequiredMixin, PermissionRequiredMixin):
+    login_url = 'bases:login'
     raise_exception = False
     redirect_field_name = "redirect_to"
+    
     def handle_no_permission(self): # this can be used to redirect to a 404/403 forbidden page
         from django.contrib.auth.models import AnonymousUser
         if not self.request.user == AnonymousUser():
