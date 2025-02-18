@@ -20,7 +20,7 @@ class SinPrivilegios(LoginRequiredMixin, PermissionRequiredMixin):
     raise_exception = False
     redirect_field_name = "redirect_to"
     
-    def handle_no_permission(self): # this can be used to redirect to a 404/403 forbidden page
+    def handle_no_permission(self): # this can be used to redirect to a 404/403 forbidden page #119
         from django.contrib.auth.models import AnonymousUser
         if not self.request.user == AnonymousUser():
             self.login_url = "bases:sin_privilegios"

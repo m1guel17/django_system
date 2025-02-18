@@ -96,6 +96,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+            {% comment %} 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -111,24 +112,29 @@
                     </div>
                 </div>
             </li>
+            {% endcomment %}
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
+            {% comment %}
             <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
             </div>
+            {% endcomment %}
 
             <!-- Nav Item - Pages Collapse Menu -->
+             {% comment %}
+             
+             
             <li class="nav-item">
-            {% comment %} <li class="nav-item active"> {% endcomment %}
+            <!-- <li class="nav-item active">  -->
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                {% comment %} <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" {% endcomment %}
+                <!-- <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"> --> 
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login.html">Login</a>
@@ -141,7 +147,6 @@
                     </div>
                 </div>
             </li>
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
@@ -164,6 +169,7 @@
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
+            {% endcomment %}
         </ul>
         <!-- End of Sidebar -->
         {% endblock side_bar %}
@@ -419,22 +425,22 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">¿<mark>{{ user.username }}</mark> quieres cerrar sesión?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Haz click en <mark>Salir</mark> para cerrar tu sesión.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
                     {% comment %} <a class="btn btn-primary" href="{% url 'bases:logout' %}">Salir</a> {% endcomment %}
                     <form action="{% url 'bases:logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Logout</button>
+                        <button type="submit" class="btn btn-primary">Salir   <i class="far fa-question-circle"></i></button>
                     </form>
                 </div>
             </div>
