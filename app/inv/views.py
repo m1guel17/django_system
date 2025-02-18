@@ -6,6 +6,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import generic
 from django.urls import reverse_lazy
 
+from django.contrib.auth.decorators import login_required, permission_required
+
 from inv.models import Categoria, SubCategoria, Marca, UnidadMedida, Producto
 from inv.forms import CategoriaForm, SubCategoriaForm, MarcaForm, UMForm, ProductoForm
 
@@ -128,6 +130,8 @@ class MarcaEdit(LoginRequiredMixin, generic.UpdateView):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
 
+@login_required(login_url="bases:login")
+@permission_required("inv.change_marca", login_url="bases:sin_privilegios")
 def marca_inactivar(request, id):
     marca = Marca.objects.filter(pk=id).first()
     contexto = {}
