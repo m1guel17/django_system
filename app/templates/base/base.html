@@ -71,12 +71,25 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Catálogos de Inventario:</h6>
+                        {% if perms.inv.view_categoria %}
                         <a class="collapse-item" href="{% url 'inv:categoria_lista' %}">Categorías</a>
+                        {% endif %}
+                        {% if perms.inv.view_subcategoria %}
                         <a class="collapse-item" href="{% url 'inv:subcategoria_lista' %}">Sub Categorías</a>
+                        {% endif %}
+                        {% if perms.inv.view_marca %}
                         <a class="collapse-item" href="{% url 'inv:marca_lista' %}">Marcas</a>
+                        {% endif %}
+                        {% if perms.inv.view_unidadmedida %}
                         <a class="collapse-item" href="{% url 'inv:um_lista' %}">Unidad Medida</a>
+                        {% endif %}
+                        {% if perms.inv.view_producto %}
                         <a class="collapse-item" href="{% url 'inv:producto_lista' %}">Producto</a>
+                        {% endif %}
+                        {% if perms.cmp.view_proveedor %}
+                        <h6 class="collapse-header">Catálogos de Compras:</h6>
                         <a class="collapse-item" href="{% url 'cmp:proveedor_lista' %}">Proveedor</a>
+                        {% endif %}
                         {% comment %} <a class="collapse-item" href="cards.html">Cards</a> {% endcomment %}
                     </div>
                 </div>

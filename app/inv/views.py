@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views import generic
@@ -9,7 +9,10 @@ from django.urls import reverse_lazy
 from inv.models import Categoria, SubCategoria, Marca, UnidadMedida, Producto
 from inv.forms import CategoriaForm, SubCategoriaForm, MarcaForm, UMForm, ProductoForm
 
-class CategoriaView(LoginRequiredMixin, generic.ListView):
+from bases.views import SinPrivilegios
+
+class CategoriaView(LoginRequiredMixin, PermissionRequiredMixin, generic.ListView):
+    permission_required = "inv.view_categoria"
     model = Categoria
     template_name = "inv/categoria_lista.html"
     context_object_name = "obj"
@@ -48,11 +51,20 @@ class CategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     success_url	= reverse_lazy("inv:categoria_lista")
     success_message = "Categoría Eliminada Satisfactoriamente"
 
-class SubCategoriaView(LoginRequiredMixin, generic.ListView):
+class SubCategoriaView(LoginRequiredMixin, SinPrivilegios, generic.ListView):
+    permission_required = "inv.view_subcategoria"
     model = SubCategoria
     template_name = "inv/subcategoria_lista.html"
     context_object_name = "obj"
     login_url = 'bases:login'
+    """
+    def handle_no_permission(self): # this can be used to redirect to a 404/403 forbidden page 
+        if self.request.user.is_authenticated:
+            return render(self.request, "bases/403.html", status=403)
+        else:
+            return redirect(self.get_login_url())
+    """
+
 
 class SubCategoriaNew(LoginRequiredMixin, generic.CreateView):
     model = SubCategoria
@@ -85,7 +97,8 @@ class SubCategoriaDelete(LoginRequiredMixin, generic.DeleteView):
     success_url	= reverse_lazy("inv:subcategoria_lista")
     success_message = "Categoría Eliminada Satisfactoriamente"
 
-class MarcaView(LoginRequiredMixin, generic.ListView):
+class MarcaView(LoginRequiredMixin, SinPrivilegios, generic.ListView):
+    permission_required = "inv.view_marca"
     model = Marca
     template_name = "inv/marca_lista.html"
     context_object_name = "obj"
