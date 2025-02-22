@@ -67,7 +67,7 @@ Deployment
 # Technology Stack 💻
 * Backend: Django 5.1.4
 * Database: PostgreSQL
-* PDF Generation: ReportLab (_in development_)
+* PDF Generation: xhtml2pdf, ReportLab (_in development_)
 * Frontend: HTML, Bootstrap, JS
 * Authentication: Django Admin
 

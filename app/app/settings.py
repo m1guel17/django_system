@@ -12,11 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url #CHANGE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -27,8 +25,7 @@ SECRET_KEY = 'django-insecure-3idlcs$d&%k2-%b%!@ha0o!yomx31u89zz0f7vl)t$0*4&lhe0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv("ALLOWED_HOST")] if os.getenv("ALLOWED_HOST") else [] #CHANGE
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -53,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # test for render database #CHANGE
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -79,27 +75,18 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-if os.getenv("DATABASE_URL"): #CHANGE
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get('DATABASE_URL'),
-            conn_max_age=600
-        )
+DATABASES = {
+    'default': {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "db_full",
+        "USER": "miguel",
+        "PASSWORD": "asd",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
-    
-else:
-    DATABASES = {
-        'default': {
-            "ENGINE": "django.db.backends.postgresql_psycopg2",
-            "NAME": "db_full",
-            "USER": "miguel",
-            "PASSWORD": "asd",
-            "HOST": "127.0.0.1",
-            "PORT": "5432",
-            # 'ENGINE': 'django.db.backends.sqlite3',
-            # 'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 
 # Password validation
@@ -138,7 +125,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
