@@ -2,7 +2,11 @@ from django.db import models
 from bases.models import ClaseModelo
 from inv.models import Producto
 
-# Create your models here.
+# signals
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.db.models import Sum
+
 
 class Proveedor(ClaseModelo):
     descripcion = models.CharField(
@@ -84,3 +88,39 @@ class ComprasDet(ClaseModelo):
     class Meta:
         verbose_name_plural = "Detalle de Compras"
         verbose_name="Detalle Compra"
+
+# this is used when we delete an item from the ComprasDet table to update view?
+@receiver(post_delete, sender=ComprasDet) #post_delete is the signals object from django library
+def detalle_compra_borrar(sender,instance, **kwargs):
+    id_producto = instance.producto.id  # producto comes from ComprasDet Model
+    id_compra = instance.compra.id # compra comes from ComprasDet Model
+
+    enc = ComprasEnc.objects.filter(pk=id_compra).first()
+    
+    if enc:
+        sub_total = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('sub_total'))
+        descuento = ComprasDet.objects.filter(compra=id_compra).aggregate(Sum('descuento'))
+        enc.sub_total=sub_total['sub_total__sum']
+        enc.descuento=descuento['descuento__sum']
+        enc.save()
+    
+    
+    prod = Producto.objects.filter(pk=id_producto).first()
+    
+    if prod:
+        cantidad = int(prod.existencia) - int(instance.cantidad)
+        prod.existencia = cantidad
+        prod.save()
+
+@receiver(post_save, sender=ComprasDet)
+def detalle_compra_guardar(sender,instance,**kwargs):
+    id_producto = instance.producto.id
+    fecha_compra=instance.compra.fecha_compra
+
+    prod = Producto.objects.filter(pk=id_producto).first()
+    
+    if prod:
+        cantidad = int(prod.existencia) + int(instance.cantidad)
+        prod.existencia = cantidad
+        prod.ultima_compra=fecha_compra
+        prod.save()
