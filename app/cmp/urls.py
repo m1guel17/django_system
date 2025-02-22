@@ -12,4 +12,5 @@ urlpatterns = [
     path('compras/new', compras, name='compras_new'),
     path('compras/edit/<int:compra_id>', compras, name='compras_edit'),
     path('compras/<int:compra_id>/delete/<int:pk>', CompraDetDelete.as_view(), name='compras_del'),
+    path('compras/compras_print_one/<int:compra_id>', CompraDetDelete.as_view(), name='compras_print_one'),
 ]

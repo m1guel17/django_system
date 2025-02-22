@@ -190,3 +190,13 @@ class CompraDetDelete(SinPrivilegios, generic.DeleteView):
           compra_id=self.kwargs['compra_id']
           return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
 
+class CompraPrint(SinPrivilegios, generic.DeleteView):
+    permission_required = "cmp.view_comprasenc"
+    model = ComprasDet
+    template_name = "cmp/compras_det_del.html"
+    context_object_name = 'obj'
+    
+    def get_success_url(self):
+          compra_id=self.kwargs['compra_id']
+          return reverse_lazy('cmp:compras_edit', kwargs={'compra_id': compra_id})
+
