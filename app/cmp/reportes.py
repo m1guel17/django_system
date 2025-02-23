@@ -89,14 +89,14 @@ def imprimir_compra(request, compra_id):
     }
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="report.pdf"'
+    filename = "reporte N{}.pdf".format(enc.id)
+    response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
     # create a pdf
-    pisaStatus = pisa.CreatePDF(
-       html, dest=response, link_callback=link_callback)
+    pisaStatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
     # if error then show some funy view
     if pisaStatus.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
