@@ -90,7 +90,8 @@ def imprimir_compra(request, compra_id):
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     filename = "reporte N{}.pdf".format(enc.id)
-    response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    # response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
