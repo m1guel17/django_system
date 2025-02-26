@@ -27,6 +27,12 @@
 
    <!-- XDSoft DateTimePicker -->  
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
+   
+   <!-- bootstrap table -->  
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.css">
+
+   <!-- select2 orga package to filter combobox-->
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -93,6 +99,10 @@
                         <h6 class="collapse-header">Catálogos de Compras:</h6>
                         <a class="collapse-item" href="{% url 'cmp:proveedor_lista' %}">Proveedor</a>
                         {% endif %}
+                        {% if perms.cmp.view_cliente %}
+                        <h6 class="collapse-header">Catálogos de Facturación:</h6>
+                        <a class="collapse-item" href="{% url 'fac:cliente_lista' %}">Clientes</a>
+                        {% endif %}
                         {% comment %} <a class="collapse-item" href="cards.html">Cards</a> {% endcomment %}
                     </div>
                 </div>
@@ -107,6 +117,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Entradas:</h6>
                         <a class="collapse-item" href="{% url 'cmp:compras_lista' %}">Compras</a>
+                        <h6 class="collapse-header">Salidas:</h6>
+                        <a class="collapse-item" href="{% url 'fac:facturas_lista' %}">Facturas</a>
                     </div>
                 </div>
             </li>
@@ -480,6 +492,15 @@
     <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
+    
+    <!-- bootstrap table js-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table.min.js"></script>
+    
+    <!-- bootstrap table js locale language-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.24.0/dist/bootstrap-table-locale-all.min.js"></script>
+    
+    <!-- select2 orga package to filter combobox-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
         $(document).ready(function () {
