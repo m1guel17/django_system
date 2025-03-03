@@ -39,11 +39,11 @@
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-group">
-                                                    <label for="id_fecha_compra">No. Factura:</label>
+                                                    <label for="id_no_factura">No. Factura:</label>
                                                     {{form_enc.no_factura}}
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="id_descripcion">Fecha Factura:</label>
+                                                    <label for="id_fecha_factura">Fecha Factura:</label>
                                                     {{form_enc.fecha_factura}}
                                                 </div>
                                                 <div class="row">
@@ -307,7 +307,7 @@
 
     });
     
-    function selectProducto(id,descripcion) // testo se referencia en el boton far fa-hand-pointer del dataTable
+    function selectProducto(id,descripcion) // esto se referencia en el boton far fa-hand-pointer del dataTable
     {
         $("#id_cantidad_detalle").val(0);
         $('#id_precio_detalle').val(0);
@@ -326,6 +326,7 @@
 
     function calcular_detalle()
     {
+        //console.log("new");
         var cant,prec,desc,stotal,total;
 
         cant = $("#id_cantidad_detalle").val();

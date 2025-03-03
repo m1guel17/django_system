@@ -57,9 +57,9 @@
                         </div>
                     </td>
                     <td>
-                        <button class="btn btn-warning btn-circle" href="#">
+                        <a href="{% url 'fac:factura_edit' item.id %}" class="href btn btn-warning btn-circle">
                             <i class="far fa-edit"></i>
-                        </button>
+                        </a>
                     </td>
                 </tr>
                 {% endfor %}

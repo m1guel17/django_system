@@ -10,5 +10,6 @@ urlpatterns = [
     
     path('facturas/', FacturaView.as_view(), name='facturas_lista'),
     path('facturas/news', facturas, name='factura_new'),
+    path('facturas/edit/<int:id>', facturas, name='factura_edit'),
     path('facturas/buscar-producto', ProductoView.as_view(), name='factura_producto'),
 ]
