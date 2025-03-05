@@ -87,7 +87,7 @@ def detalle_factura_guardar(sender,instance,**kwargs):
         enc.descuento = descuento
         enc.save()
 
-    prod=Producto.objects.filter(pk=producto_id).first()
+    prod = Producto.objects.filter(pk=producto_id).first()
     if prod:
         cantidad = int(prod.existencia) - int(instance.cantidad)
         prod.existencia = cantidad
@@ -101,7 +101,7 @@ def detalle_factura_guardar(sender,instance,**kwargs):
         
         
 """
-Use of the get
+Use of objects.get
 FacturaDet.objects.filter(factura=2).aggregate(sub_total=Sum("sub_total"))           
 {'sub_total': 125.0} This gets an object
 
