@@ -5,6 +5,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.contrib import messages
+from django.contrib.auth import authenticate
 
 from datetime import datetime
 
@@ -150,3 +151,40 @@ def facturas(request,id=None):
 class ProductoView(inv.ProductoView):
     template_name = "fac/buscar_producto.html"
     
+def borrar_detalle_factura(request, id):
+    template_name = "fac/factura_borrar_detalle.html"
+    
+    det = FacturaDet.objects.get(pk=id)
+    
+    if request.method == "GET":
+        context = {
+            "det": det
+        }
+        
+    if request.method == "POST":
+        usr = request.POST.get("usuario")
+        psw = request.POST.get("password")
+        
+        user = authenticate(username=usr, password=psw)
+        print(usr)
+        print(psw)
+        
+        if not user:
+            return HttpResponse("Usuario o Clave Incorrecta")
+        
+        if not user.is_active:
+            return HttpResponse("Usuario Inactivo")
+        
+        if user.is_superuser or user.has_perm("fac.sup_caja_facturadet"):
+            det.id = None
+            det.cantidad = (-1 * det.cantidad)
+            det.sub_total = (-1 * det.sub_total)
+            det.descuento = (-1 * det.descuento)
+            det.total = (-1 * det.total)
+            det.save()
+            
+            return HttpResponse("Ok")
+    
+        return HttpResponse("Usuario no autorizado")
+    
+    return render(request, template_name, context)
